@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # Configure my domain zone:
-# www --> 914-lb-01 3.83.192.251
-# web-01 --> 914-web-01 18.205.38.219
-# web-02 --> 914-web-02 34.138.16.188
-
+# www --> 914-lb-01 3.83.192.51
+# web-01 --> 39055-web-01 54.166.138.244
+# web-02 --> 39055-web-02 54.144.199.162
+# web-03 --> 39055-lb-01 54.236.56.143
 # -- To be evaluated --
 # domain_information () {
 #     line=$(dig "$2"."$1" | grep -A1 'ANSWER SECTION:' | tr '\t' '\n' | tail -2 | tr '\n' ' ')
