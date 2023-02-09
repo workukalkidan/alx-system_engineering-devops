@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
-# installs nginx and configures it on a remote server
+# configure a brand new NGINX server
+	
+sudo apt-get -y update
+sudo apt-get -y install nginx
+sudo ufw allow 'Nginx HTTP'
+sudo echo "Hello World!" > /var/www/html/index.html
+sudo echo "Ceci n'est pas une page" > /var/www/html/404.html
+	
+sudo sed -i '14a \\tadd_header X-Served-By '39055-web-01';' /etc/nginx/nginx.conf 
 
-apt-get -y update
-apt-get -y install nginx
-ufw allow 'Nginx HTTP'
-echo "Hello World!" > /var/www/html/index.html
-sed -i "/listen 80 default_server;
-sed -i '14a \\tadd_header X-Served-By '39055-web-01';' /etc/nginx/nginx.conf
-service nginx start
+sudo service nginx restart
