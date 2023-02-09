@@ -8,8 +8,7 @@ sudo ufw allow 'Nginx HTTP'
 sudo echo "Hello World!" > /var/www/html/index.html
 sudo echo "Ceci n'est pas une page" > /var/www/html/404.html
 	
-sudo sed -i "/listen 80 default_server;/a rewrite ^/redirect_me sudo https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;" /etc/nginx/sites-available/default
-
+sudo sed -i "/listen 80 default_server;/a rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;" /etc/nginx/sites-available/default
 sudo sed -i "/listen 80 default_server;/a error_page 404 /404.html;" /etc/nginx/sites-available/default
 
 sudo sed -i '14a \\tadd_header X-Served-By '39055-web-01';' /etc/nginx/nginx.conf
