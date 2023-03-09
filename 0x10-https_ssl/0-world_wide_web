@@ -1,7 +1,7 @@
-#!/usr/bin/env bash
+[200~#!/usr/bin/env bash
 # Configure my domain zone:
 # www --> 39055-lb-01 18.208.119.135
-# web-01 --> 39055-web-01 100.25.29.231
+# web-01 --> 39055-web-01 100.26.156.58
 # web-02 --> 39055-web-01 54.160.113.141
 
 # -- To be evaluated --
