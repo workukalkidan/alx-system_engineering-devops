@@ -19,19 +19,16 @@
 # Default server configuration
 #
 server {
+	add_header X-Served-By $hostname always;
+
 	listen 80 default_server;
 	listen [::]:80 default_server;
 
 	# SSL configuration
 	#
-	add_header X-Served-By 39055-web-01;
 	# listen 443 ssl default_server;
 	# listen [::]:443 ssl default_server;
 	#
-	location /redirect_me {
-		 return 301 https://google.com;
-	}
-
 	# Note: You should disable gzip for SSL traffic.
 	# See: https://bugs.debian.org/773332
 	#
@@ -43,28 +40,41 @@ server {
 	#
 	# include snippets/snakeoil.conf;
 
-	root /var/www/html;
+	root /home/ubuntu/AirBnB_clone_v4/web_dynamic;
 
 	# Add index.php to the list if you are using PHP
 	index index.html index.htm index.nginx-debian.html;
 
-	server_name _;
-	
-	location /airbnb-onepage {
-		proxy_pass http://0.0.0.0:5000/airbnb-onepage;
+	server_name localhost pearmountain.space www.pearmountain.space web-01.pearmountain.space;
+
+	location = / {
+		include proxy_params;
+		proxy_pass http://127.0.0.1:8004/2-hbnb;
 	}
 
-	location ~ ^/airbnb-dynamic/number_odd_or_even/([0-9]+)$ {
-		proxy_pass http://0.0.0.0:5001/number_odd_or_even/$1;
-	}
-	location /hbnb_static {
-		alias /data/web_static/current/;
+	location /static {
+		try_files $uri =404;
 	}
 
-	location /{
-		# First attempt to serve request as file, then
-		# as directory, then fall back to displaying a 404.
-		try_files $uri $uri/ =404;
+	# location @hbnb_dynamic {
+	# 	rewrite ^/?$ /2-hbnb break;
+	# 	include proxy_params;
+	# 	proxy_pass http://127.0.0.1:8004;
+	# }
+
+	location /airbnb-onepage/ {
+		include proxy_params;
+		proxy_pass http://127.0.0.1:8001/;
+	}
+
+	location /airbnb-dynamic/ {
+		include proxy_params;
+		proxy_pass http://127.0.0.1:8002/;
+	}
+
+	location /api/ {
+		include proxy_params;
+		proxy_pass http://127.0.0.1:8003; # no slash because we want full route with '/api/'
 	}
 
 	# pass PHP scripts to FastCGI server
@@ -73,7 +83,7 @@ server {
 	#	include snippets/fastcgi-php.conf;
 	#
 	#	# With php-fpm (or other unix sockets):
-	#	fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
+	#	fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
 	#	# With php-cgi (or other tcp sockets):
 	#	fastcgi_pass 127.0.0.1:9000;
 	#}
